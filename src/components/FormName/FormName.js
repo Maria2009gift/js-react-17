@@ -11,18 +11,8 @@ class FormName extends Component {
   };
 
   handleSubmit = (event) => {
-    // this.props.data.contacts.map((contact) => {
-
-    //   if (contact.name === this.state.name) {
-    //     alert("Nuh uh");
-        // return;
-      // } 
-      // else {
-        event.preventDefault();
-        this.props.add(this.state.name, this.state.number);
-      //   return;
-      // }
-    // })
+    event.preventDefault();
+    this.props.add(this.state.name, this.state.number);
   };
   render() {
     
