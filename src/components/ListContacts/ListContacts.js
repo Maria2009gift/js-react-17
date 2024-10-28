@@ -3,39 +3,33 @@ import React, { Component } from "react";
 class ListContacts extends Component {
 
     state = {
-        filter: "e",
+      filter: "",
     }
 
-    filterContact = (event) => {
-        // console.log(event.currentTarget.value);
+    handleFilter = (event)=>{
+      this.setState({filter: event.currentTarget.value})
     }
+
+    getVisibleTasks = () =>{
+      return this.props.data.contacts.filter((contact) => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+    }
+    
 
   render() {
-    const filtered = this.state.filter
+    const visible = this.getVisibleTasks()
 
     return (
       <>
         <h2>Contacts</h2>
-        <input type="text" onChange={this.filterContact}/>
+        <input type="text" onChange={this.handleFilter}  value={this.state.filter}/>
         <ul>
             {     
-              this.props.data.contacts.map((contact) => {
-                // console.log(filtered);
-                // console.log(this.state.filter);
-                console.log(filtered);
-                
-                console.log(contact.name.includes({filtered}));
-                
-                if (contact.name.includes({filtered})) {
-                    
-                    
-                }
-                // console.log();
-                
+              visible.map((contact) => {
+
                     return (
                       <li key={contact.id}>
-                        <p>{contact.name}</p>
-                        <p>{contact.number}</p>
+                        <p>{contact.name}: {contact.number}</p>
+                        <button type='button' onClick={() => {this.props.deleteing(contact.id)}}>Delete</button>
                       </li>
                     )
               })

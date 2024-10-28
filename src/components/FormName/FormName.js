@@ -6,17 +6,26 @@ class FormName extends Component {
     number: "",
   };
 
-  addContactToPhonebook = (event) => {
+  addContactToPhonebook = (event) => {  
     this.setState({ [event.currentTarget.name]: event.currentTarget.value });
-
-    console.log(event.currentTarget.name);
   };
 
   handleSubmit = (event) => {
-    event.preventDefault();
-    this.props.add(this.state.name, this.state.number);
+    // this.props.data.contacts.map((contact) => {
+
+    //   if (contact.name === this.state.name) {
+    //     alert("Nuh uh");
+        // return;
+      // } 
+      // else {
+        event.preventDefault();
+        this.props.add(this.state.name, this.state.number);
+      //   return;
+      // }
+    // })
   };
   render() {
+    
     return (
       <form onSubmit={this.handleSubmit}>
         <label>

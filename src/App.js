@@ -22,19 +22,23 @@ class App extends Component {
         contacts: [...contacts, contact],
       };
     });
-    console.log(this.state.contacts);
 
     return this.state.contacts;
   };
+
+  deleteContact = (id) => {
+    const newContacts = this.state.contacts.filter(contact => contact.id !== id)
+    this.setState({ contacts: newContacts })
+  }
 
   render() {
     return (
       <>
         <h1>Phonebook</h1>
         <div>
-          <FormName add={this.addToContacts} />
+          <FormName add={this.addToContacts} data={this.state} />
         </div>
-        <ListContacts data={this.state} />
+        <ListContacts data={this.state} deleteing={this.deleteContact} />
       </>
     );
   }
