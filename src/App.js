@@ -31,7 +31,14 @@ class App extends Component {
     this.setState({ contacts: newContacts })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.contacts !== this.state.contacts)
+    window.localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+  }
+
   render() {
+    console.log(window.localStorage.getItem("contacts"));
+    
     return (
       <>
         <h1>Phonebook</h1>
