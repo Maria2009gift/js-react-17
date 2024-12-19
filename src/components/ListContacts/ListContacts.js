@@ -1,27 +1,23 @@
-import React, { Component } from "react";
+import { useState } from "react";
 
-class ListContacts extends Component {
+function ListContacts ({data, deleteing}) {
 
-    state = {
-      filter: "",
+  const [filter, setFilter] = useState("")
+
+    const handleFilter = (event)=>{
+      setFilter(event.currentTarget.value)
     }
 
-    handleFilter = (event)=>{
-      this.setState({filter: event.currentTarget.value})
-    }
-
-    getVisibleTasks = () =>{
-      return this.props.data.contacts.filter((contact) => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+    const getVisibleTasks = () =>{
+      return data.filter((contact) => contact.name.toLowerCase().includes(filter.toLowerCase()))
     }
     
-
-  render() {
-    const visible = this.getVisibleTasks()
+    const visible = getVisibleTasks()
 
     return (
       <>
         <h2>Contacts</h2>
-        <input type="text" onChange={this.handleFilter}  value={this.state.filter}/>
+        <input type="text" onChange={handleFilter}  value={filter}/>
         <ul>
             {     
               visible.map((contact) => {
@@ -29,7 +25,7 @@ class ListContacts extends Component {
                     return (
                       <li key={contact.id}>
                         <p>{contact.name}: {contact.number}</p>
-                        <button type='button' onClick={() => {this.props.deleteing(contact.id)}}>Delete</button>
+                        <button type='button' onClick={() => {deleteing(contact.id)}}>Delete</button>
                       </li>
                     )
               })
@@ -39,6 +35,6 @@ class ListContacts extends Component {
       </>
     );
   }
-}
+
 
 export default ListContacts;

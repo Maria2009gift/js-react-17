@@ -1,61 +1,51 @@
-import React, { Component } from "react";
+
+import { useState, useEffect } from "react";
 import "./App.css";
 import { nanoid } from "nanoid/non-secure";
 
 import FormName from "./components/FormName/FormName";
 import ListContacts from "./components/ListContacts/ListContacts";
 
-class App extends Component {
-  state = {
-    contacts: [    
-      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},],
-    
-  };
+function App (){
+  const [contacts, setContacts] = useState([])
 
-  addToContacts = (name, number) => {
+  const addToContacts = (name, number) => {
     const contact = { id: nanoid(), name, number };
-    this.setState(({ contacts }) => {
-      return {
-        contacts: [...contacts, contact],
-      };
-    });
-
-    return this.state.contacts;
+    setContacts([...contacts, contact]);
+    
+    return contacts;
   };
 
-  deleteContact = (id) => {
-    const newContacts = this.state.contacts.filter(contact => contact.id !== id)
-    this.setState({ contacts: newContacts })
+  const deleteContact = (id) => {
+    const newContacts = contacts.filter(contact => contact.id !== id)
+    setContacts(newContacts)
   }
 
-  componentDidMount() {
+  useEffect(() => {
     const contactsFromLocalStorage = window.localStorage.getItem("contacts")
     if (contactsFromLocalStorage) {     
-      this.setState({contacts: JSON.parse(contactsFromLocalStorage)})
+      setContacts(JSON.parse(contactsFromLocalStorage))
     }
-  }
+  },[])
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.contacts !== this.state.contacts)
-    window.localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
-  }
+  // useEffect(() => {
+  //   if(prevState.contacts !== contacts)
+  //   window.localStorage.setItem("contacts", JSON.stringify(contacts))
+  // },[contacts])
 
-  render() {
-    console.log(window.localStorage.getItem("contacts"));
+  // render() {
+  //   console.log(window.localStorage.getItem("contacts"));
     
     return (
       <>
         <h1>Phonebook</h1>
         <div>
-          <FormName add={this.addToContacts} data={this.state} />
+          <FormName add={addToContacts} data={contacts} />
         </div>
-        <ListContacts data={this.state} deleteing={this.deleteContact} />
+        <ListContacts data={contacts} deleteing={deleteContact} />
       </>
     );
-  }
+  // }
 }
 
 export default App;
