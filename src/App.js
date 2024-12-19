@@ -28,14 +28,6 @@ function App (){
     }
   },[])
 
-  // useEffect(() => {
-  //   if(prevState.contacts !== contacts)
-  //   window.localStorage.setItem("contacts", JSON.stringify(contacts))
-  // },[contacts])
-
-  // render() {
-  //   console.log(window.localStorage.getItem("contacts"));
-    
     return (
       <>
         <h1>Phonebook</h1>
